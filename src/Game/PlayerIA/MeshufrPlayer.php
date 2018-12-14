@@ -32,7 +32,7 @@ class MeshufrPlayer extends Player
       if ($opponentStats['foe'] == $roundNb && $roundNb)
         $result = parent::foeChoice();
       else if ($roundNb > 98)
-        $result = parent::friendChoice();
+        $result = parent::foeChoice();
       else if ($opponentStats['foe'] < 3)
         $result = parent::friendChoice();
       return $result;
