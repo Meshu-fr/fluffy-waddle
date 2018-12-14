@@ -32,7 +32,7 @@ class MeshufrPlayer extends Player
       {
         return parent::foeChoice();
       }
-      else if ($roundNb > 8)
+      else if ($roundNb > 8 || $this->result->getLastChoiceFor($this->opponentSide))
         return parent::foeChoice();
       return parent::friendChoice();
     }
