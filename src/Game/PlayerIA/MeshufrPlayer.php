@@ -17,7 +17,6 @@ class MeshufrPlayer extends Player
 
     public function mirrorFoe()
     {
-      $roundNb = $this->result->getNbRound();
       $opponentActions = $this->result->getChoicesFor($this->opponentSide);
       $opponentLastAction = $this->result->getLastChoiceFor($this->opponentSide);
       if (!$opponentLastAction)
@@ -25,9 +24,22 @@ class MeshufrPlayer extends Player
       return $opponentLastAction;
     }
 
+    public function bastardMove()
+    {
+      $roundNb = $this->result->getNbRound();
+      $opponentStats = $this->result->getStatsFor($this->opponentSide);
+      if ($opponentStats['foe'] == $this->result->getNbRound() && $this->result->getNbRound())
+      {
+        return parent::foeChoice();
+      }
+      else if ($roundNb > 8)
+        return parent::foeChoice();
+      return parent::friendChoice();
+    }
+
     public function getChoice()
     {
-        return $this->mirrorFoe();
+        return $this->bastardMove();
         // -------------------------------------    -----------------------------------------------------
         // How to get my Last Choice           ?    $this->result->getLastChoiceFor($this->mySide) -- if 0 (first round)
         // How to get the opponent Last Choice ?    $this->result->getLastChoiceFor($this->opponentSide) -- if 0 (first round)
