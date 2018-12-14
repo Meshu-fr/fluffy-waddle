@@ -14,16 +14,20 @@ class MeshufrPlayer extends Player
     protected $mySide;
     protected $opponentSide;
     protected $result;
-    private $roundNb = 0;
+
+    public function mirrorFoe()
+    {
+      $roundNb = $this->result->getNbRound();
+      $opponentActions = $this->result->getChoicesFor($this->opponentSide);
+      $opponentLastAction = $this->result->getLastChoiceFor($this->opponentSide);
+      if (!$opponentLastAction)
+        return parent::foeChoice();
+      return $opponentLastAction;
+    }
 
     public function getChoice()
     {
-      $opponentAction = $this->result->getChoicesFor($this->opponentSide);
-      echo $opponentAction[$roundNb];
-      $roundNb++;
-      if (!$opponentAction[$roundNb])
-        return parent::foeChoice();
-      return $opponentAction[$roundNb];
+        return $this->mirrorFoe();
         // -------------------------------------    -----------------------------------------------------
         // How to get my Last Choice           ?    $this->result->getLastChoiceFor($this->mySide) -- if 0 (first round)
         // How to get the opponent Last Choice ?    $this->result->getLastChoiceFor($this->opponentSide) -- if 0 (first round)
